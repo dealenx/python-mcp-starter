@@ -40,6 +40,7 @@ def run_sse(host: str, port: int):
 @click.option("--port", type=int, default=lambda: int(os.getenv("PORT", 8000)),
               show_default=True, help="Port for SSE mode")
 def main(sse: bool, host: str, port: int):
+    print("Начался запуск MCP сервера")
     if sse:
         run_sse(host, port)
     else:
