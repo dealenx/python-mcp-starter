@@ -2,7 +2,15 @@
   "mcpServers": {
     "hello-mcp-server": {
       "command": "npx",
-      "args": ["mcp-remote", "http://localhost:8000/sse"]
+      "args": [
+        "mcp-remote",
+        "http://localhost:8000/sse"
+      ],
+      "disabled": false,
+      "autoApprove": [
+        "add",
+        "add"
+      ]
     }
   }
 }
