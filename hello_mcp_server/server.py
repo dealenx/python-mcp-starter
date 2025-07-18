@@ -1,4 +1,5 @@
 import os
+import sys
 import anyio
 import click
 import uvicorn
@@ -27,9 +28,30 @@ def get_greeting(name: str) -> str:
 
 # Runners
 async def run_stdio():
+    print("🚀 Запуск MCP сервера в режиме STDIO")
+    print(f"📋 ID приложения: {APP_ID}")
+    print(f"🐍 Версия Python: {sys.version}")
+    print(f"📁 Рабочая директория: {os.getcwd()}")
+    print(f"🔧 Переменные окружения:")
+    for key in ['HOST', 'PORT', 'DEBUG']:
+        value = os.getenv(key, 'не установлено')
+        print(f"   {key}: {value}")
+    print("📡 Ожидание подключения через STDIO...")
     await mcp.run_stdio_async()
 
 def run_sse(host: str, port: int):
+    print("🚀 Запуск MCP сервера в режиме SSE")
+    print(f"📋 ID приложения: {APP_ID}")
+    print(f"🐍 Версия Python: {sys.version}")
+    print(f"📁 Рабочая директория: {os.getcwd()}")
+    print(f"🌐 Хост: {host}")
+    print(f"🔌 Порт: {port}")
+    print(f"📍 URL сервера: http://{host}:{port}")
+    print(f"🔧 Переменные окружения:")
+    for key in ['HOST', 'PORT', 'DEBUG']:
+        value = os.getenv(key, 'не установлено')
+        print(f"   {key}: {value}")
+    print("🎯 Запуск Uvicorn сервера...")
     uvicorn.run(starlette_app, host=host, port=port)
 
 # CLI
@@ -40,7 +62,15 @@ def run_sse(host: str, port: int):
 @click.option("--port", type=int, default=lambda: int(os.getenv("PORT", 8000)),
               show_default=True, help="Port for SSE mode")
 def main(sse: bool, host: str, port: int):
-    print("Начался запуск MCP сервера")
+    print("=" * 50)
+    print("🎉 Начался запуск MCP сервера")
+    print("=" * 50)
+    print(f"⚙️  Режим запуска: {'SSE' if sse else 'STDIO'}")
+    print(f"🕐 Время запуска: {os.getenv('TZ', 'системное время')}")
+    print(f"💻 Платформа: {sys.platform}")
+    print(f"🏠 Домашняя директория: {os.path.expanduser('~')}")
+    print("=" * 50)
+    
     if sse:
         run_sse(host, port)
     else:
